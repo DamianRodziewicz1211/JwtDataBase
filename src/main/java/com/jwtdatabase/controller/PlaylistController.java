@@ -5,10 +5,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloWorldController {
+public class PlaylistController {
 
-    @RequestMapping({ "/hello"})
-    public String firstPage() {
-            return "Hello World";
-    }
+    @RequestMapping(value = "/playlists", method = RequestMethod.GET)
+    public String HelloPlaylist() { return "Hello from playlists"; }
 }

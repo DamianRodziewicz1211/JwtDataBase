@@ -5,10 +5,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloWorldController {
+public class AlbumController {
 
-    @RequestMapping({ "/hello"})
-    public String firstPage() {
-            return "Hello World";
-    }
+    @RequestMapping(value = "/albums", method = RequestMethod.GET)
+    public String HelloAlbums() { return "Hello from albums";}
 }
