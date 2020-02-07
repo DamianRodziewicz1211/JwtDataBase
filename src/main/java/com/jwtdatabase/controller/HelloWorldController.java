@@ -1,14 +1,72 @@
 package com.jwtdatabase.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.jwtdatabase.config.DeezerSearch;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HelloWorldController {
 
+    private final DeezerSearch dc = new DeezerSearch();
+
     @RequestMapping({ "/hello"})
     public String firstPage() {
             return "Hello World";
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/search")
+    public String search(@RequestParam String q){
+
+        try {
+            return dc.search(q);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return "Something missing";
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/album/{id}")
+    public String searchAlbum(@PathVariable String id){
+        try{
+            return dc.searchAlbum(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Something missing";
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/artist/{id}")
+    public String searchArtist(@PathVariable String id){
+        try{
+            return dc.searchArtist(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Something missing";
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/track/{id}")
+    public String searchTrack(@PathVariable String id){
+        try{
+            return dc.searchTrack(id);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return "Something missing";
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/playlist/{id}")
+    public String searchPlaylist(@PathVariable String id){
+        try{
+            return dc.searchPlaylist(id);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return "Something missing";
     }
 }
