@@ -1,4 +1,4 @@
-package com.jwtdatabase.config;
+package com.jwtdatabase.security;
 
 import java.io.IOException;
 import java.io.Serializable;

@@ -1,7 +1,5 @@
-package com.jwtdatabase.config;
+package com.jwtdatabase.security;
 
-import com.jwtdatabase.config.JwtAuthenticationEntryPoint;
-import com.jwtdatabase.config.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -13,6 +13,8 @@ public class DAOArtist {
     @Column
     private Integer numberOfAlbums;
 
+
+
     public String getName() {
         return artistName;
     }

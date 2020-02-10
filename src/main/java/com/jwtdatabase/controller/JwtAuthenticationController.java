@@ -1,7 +1,7 @@
 package com.jwtdatabase.controller;
 
 
-import com.jwtdatabase.config.JwtTokenUtil;
+import com.jwtdatabase.security.JwtTokenUtil;
 import com.jwtdatabase.model.*;
 import com.jwtdatabase.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

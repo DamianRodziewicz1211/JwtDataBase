@@ -1,16 +1,23 @@
-package com.jwtdatabase.config;
+package com.jwtdatabase.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.*;
+
+import com.jwtdatabase.model.DAOAlbum;
+import com.jwtdatabase.model.DAOTrack;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import org.hibernate.exception.DataException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 import java.net.URLEncoder;
+import java.util.*;
 
-public class DeezerSearch {
+
+public class DeezerAPIEndpoints {
 
     private String rapidapiHost = "deezerdevs-deezer.p.rapidapi.com";
 
@@ -38,22 +45,38 @@ public class DeezerSearch {
 
     }
 
-    public String searchAlbum (String id) throws Exception {
+    public DAOAlbum searchAlbum (String id) throws Exception {
 
         String host = "https://api.deezer.com/album/";
         String charset = "UTF-8";
+
 
         HttpResponse<JsonNode> response = Unirest.get(host + id)
                 .header("rapidapiHost",rapidapiHost)
                 .header("rapidKey",rapidapiKey)
                 .asJson();
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonParser jp = new JsonParser();
-        JsonElement je = jp.parse(response.getBody().toString());
-        String prettyJsonString = gson.toJson(je);
 
-        return prettyJsonString;
+
+        Map<Integer,String> listOfTracks = new HashMap<>();
+
+        JSONObject json = new JSONObject(response.getBody().toString());
+        JSONArray trackList = json.getJSONObject("tracks").getJSONArray("data");
+        JSONObject genre = json.getJSONObject("genres").getJSONArray("data").getJSONObject(0);
+
+        for(int i=0;i<trackList.length();i++){
+            JSONObject track = trackList.getJSONObject(i);
+            listOfTracks.put(i,track.getString("title"));
+        }
+
+        DAOAlbum album = new DAOAlbum(
+                json.getString("title"),
+                json.getJSONObject("artist").getString("name"),
+                listOfTracks,
+                genre.getString("name")
+        );
+
+        return album;
 
 
     }
@@ -76,22 +99,25 @@ public class DeezerSearch {
         return prettyJsonString;
     }
 
-    public String searchTrack(String id) throws Exception{
+    public DAOTrack searchTrack(String id) throws DataException,Exception{
 
         String host = "https://api.deezer.com/track/";
         String charset = "UTF-8";
+        ObjectMapper objectMapper = new ObjectMapper();
 
         HttpResponse<JsonNode> response = Unirest.get(host + id)
                 .header("rapidapiHost",rapidapiHost)
                 .header("rapidKey",rapidapiKey)
                 .asJson();
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonParser jp = new JsonParser();
-        JsonElement je = jp.parse(response.getBody().toString());
-        String prettyJsonString = gson.toJson(je);
+        JSONObject json = new JSONObject(response.getBody().toString());
 
-        return prettyJsonString;
+        DAOTrack track = new DAOTrack(json.getString("title"),
+                json.getJSONObject("artist").getString("name"),
+                json.getJSONObject("album").getString("title"),
+                json.getInt("duration"));
+
+        return track;
     }
 
     public String searchPlaylist(String id) throws Exception{

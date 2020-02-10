@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class DAOTrack {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long trackId;
     @Column
     private String title;
@@ -19,6 +19,16 @@ public class DAOTrack {
     private String album;
     @Column
     private Integer duration;
+
+    public DAOTrack(String title, String artist, String album, Integer duration) {
+        this.title = title;
+        this.artist = artist;
+        this.album = album;
+        this.duration = duration;
+    }
+
+    public DAOTrack() {
+    }
 
     public String getTitle() {
         return title;
@@ -50,5 +60,19 @@ public class DAOTrack {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public long getTrackId() {
+        return trackId;
+    }
+
+    @Override
+    public String toString() {
+        return "DAOTrack{" +
+                ", title='" + title + '\'' +
+                ", artist='" + artist + '\'' +
+                ", album='" + album + '\'' +
+                ", duration=" + duration +
+                '}';
     }
 }

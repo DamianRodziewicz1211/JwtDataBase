@@ -1,13 +1,13 @@
 package com.jwtdatabase.controller;
 
-import com.jwtdatabase.config.DeezerSearch;
+import com.jwtdatabase.service.DeezerAPIEndpoints;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HelloWorldController {
 
-    private final DeezerSearch dc = new DeezerSearch();
+    private final DeezerAPIEndpoints dc = new DeezerAPIEndpoints();
 
     @RequestMapping({ "/hello"})
     public String firstPage() {
@@ -26,16 +26,7 @@ public class HelloWorldController {
         return "Something missing";
     }
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping(value = "/album/{id}")
-    public String searchAlbum(@PathVariable String id){
-        try{
-            return dc.searchAlbum(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "Something missing";
-    }
+
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping(value = "/artist/{id}")
@@ -48,16 +39,7 @@ public class HelloWorldController {
         return "Something missing";
     }
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping(value = "/track/{id}")
-    public String searchTrack(@PathVariable String id){
-        try{
-            return dc.searchTrack(id);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return "Something missing";
-    }
+
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping(value = "/playlist/{id}")

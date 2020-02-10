@@ -1,4 +1,4 @@
-package com.jwtdatabase.config;
+package com.jwtdatabase.security;
 
 import com.jwtdatabase.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;

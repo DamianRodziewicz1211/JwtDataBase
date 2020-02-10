@@ -1,6 +1,7 @@
 package com.jwtdatabase.model;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 @Table(name = "album")
@@ -9,14 +10,35 @@ public class DAOAlbum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long albumId;
+
     @Column
     private String title;
+
     @Column
     private String artist;
+
+    @ElementCollection
+    @MapKeyColumn(name = "track_nr")
+    @Column(name = "title")
+    @CollectionTable(name = "Track_list")
+    private Map<Integer,String> tracks = new HashMap<Integer,String>();
+
     @Column
-    private Integer[] tracks;
-    @Column
-    private Integer rate;
+    private String genre;
+
+    public DAOAlbum() {
+    }
+
+    public DAOAlbum(String title, String artist, Map<Integer, String> tracks, String genre) {
+        this.title = title;
+        this.artist = artist;
+        this.tracks = tracks;
+        this.genre = genre;
+    }
+
+    public long getAlbumId() {
+        return albumId;
+    }
 
     public String getTitle() {
         return title;
@@ -34,19 +56,29 @@ public class DAOAlbum {
         this.artist = artist;
     }
 
-    public Integer[] getTracks() {
+    public Map<Integer, String> getTracks() {
         return tracks;
     }
 
-    public void setTracks(Integer[] tracks) {
+    public void setTracks(Map<Integer, String> tracks) {
         this.tracks = tracks;
     }
 
-    public Integer getRate() {
-        return rate;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setRate(Integer rate) {
-        this.rate = rate;
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    @Override
+    public String toString() {
+        return "DAOAlbum{" +
+                "title='" + title + '\'' +
+                ", artist='" + artist + '\'' +
+                ", tracks=" + tracks +
+                ", genre='" + genre + '\'' +
+                '}';
     }
 }

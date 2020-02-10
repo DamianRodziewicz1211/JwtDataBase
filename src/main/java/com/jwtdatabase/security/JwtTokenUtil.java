@@ -1,4 +1,4 @@
-package com.jwtdatabase.config;
+package com.jwtdatabase.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
