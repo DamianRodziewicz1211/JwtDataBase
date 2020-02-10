@@ -14,9 +14,10 @@ public class TrackController {
 
 
 
-    @RequestMapping(value = "/tracks", method = RequestMethod.GET)
-    public String HelloTracks(){
-        return "Hello from tracks";
+    @RequestMapping(value = "/track", method = RequestMethod.GET)
+    public String printTracks(){
+
+        return trackService.printTracks();
     }
 
     @ResponseStatus(value = HttpStatus.OK)

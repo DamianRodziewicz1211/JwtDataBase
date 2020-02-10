@@ -46,4 +46,8 @@ public  class TrackService {
         else
             return false;
     }
+
+    public String printTracks(){
+        return tracksRepository.findAll().toString();
+    }
 }

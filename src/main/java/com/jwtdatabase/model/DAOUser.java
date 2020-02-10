@@ -17,6 +17,10 @@ public class DAOUser {
     @JsonIgnore
     private String password;
 
+    public long getId() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }

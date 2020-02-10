@@ -25,13 +25,13 @@ public class AlbumController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "/album/{id}")
-    public long addTrack(@PathVariable String id){
+    public long addAlbum(@PathVariable String id){
         return albumService.addAlbum(id);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
     @DeleteMapping(value = "/album/{id}")
-    public boolean removeTrack(@PathVariable long id){
+    public boolean removeAlbum(@PathVariable long id){
         return albumService.deleteAlbum(id);
     }
 }

@@ -25,6 +25,7 @@ public class DAOTrack {
         this.artist = artist;
         this.album = album;
         this.duration = duration;
+
     }
 
     public DAOTrack() {
@@ -62,14 +63,15 @@ public class DAOTrack {
         this.duration = duration;
     }
 
+
     public long getTrackId() {
         return trackId;
     }
 
     @Override
     public String toString() {
-        return "DAOTrack{" +
-                ", title='" + title + '\'' +
+        return '{' +
+                " title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
                 ", album='" + album + '\'' +
                 ", duration=" + duration +

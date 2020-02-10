@@ -12,22 +12,65 @@ public class DAOArtist {
     private String artistName;
     @Column
     private Integer numberOfAlbums;
+    @Column
+    private Integer numberOfFans;
+    @Column
+    private String type;
 
 
+    public DAOArtist() {
+    }
 
-    public String getName() {
+    public DAOArtist(String artistName, Integer numberOfAlbums, Integer numberOfFans, String type) {
+        this.artistName = artistName;
+        this.numberOfAlbums = numberOfAlbums;
+        this.numberOfFans = numberOfFans;
+        this.type = type;
+    }
+
+    public long getArtistId() {
+        return artistId;
+    }
+
+    public String getArtistName() {
         return artistName;
     }
 
-    public void setName(String name) {
-        this.artistName = name;
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
     }
 
-    public Integer getNb_albums() {
+    public Integer getNumberOfAlbums() {
         return numberOfAlbums;
     }
 
-    public void setNb_albums(Integer nb_albums) {
-        this.numberOfAlbums = nb_albums;
+    public void setNumberOfAlbums(Integer numberOfAlbums) {
+        this.numberOfAlbums = numberOfAlbums;
+    }
+
+    public Integer getNumberOfFans() {
+        return numberOfFans;
+    }
+
+    public void setNumberOfFans(Integer numberOfFans) {
+        this.numberOfFans = numberOfFans;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return '{' +
+                "artistName='" + artistName + '\'' +
+                ", numberOfAlbums=" + numberOfAlbums +
+                ", numberOfFans=" + numberOfFans +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

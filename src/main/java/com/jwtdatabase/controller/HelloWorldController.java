@@ -28,27 +28,4 @@ public class HelloWorldController {
 
 
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping(value = "/artist/{id}")
-    public String searchArtist(@PathVariable String id){
-        try{
-            return dc.searchArtist(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "Something missing";
-    }
-
-
-
-    @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping(value = "/playlist/{id}")
-    public String searchPlaylist(@PathVariable String id){
-        try{
-            return dc.searchPlaylist(id);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-        return "Something missing";
-    }
 }

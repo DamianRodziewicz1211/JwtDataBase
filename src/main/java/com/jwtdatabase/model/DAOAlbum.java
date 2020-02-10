@@ -74,7 +74,7 @@ public class DAOAlbum {
 
     @Override
     public String toString() {
-        return "DAOAlbum{" +
+        return '{' +
                 "title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
                 ", tracks=" + tracks +
