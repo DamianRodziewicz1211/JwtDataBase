@@ -20,7 +20,7 @@ public class PlaylistController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "/playlist/{id}/{track_id}")
-    public boolean addPlaylist(@PathVariable long id, @PathVariable String track_id){
+    public String addPlaylist(@PathVariable long id, @PathVariable Integer track_id){
         return playlistService.addToPlaylist(id,track_id);
     }
 

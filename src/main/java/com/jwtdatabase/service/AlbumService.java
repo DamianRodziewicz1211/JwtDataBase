@@ -14,26 +14,27 @@ public class AlbumService {
     @Autowired
     private AlbumDao albumRepository;
 
-    public String getAlbum(String id){
+    public String getAlbum(Integer id){
         try{
             DAOAlbum album = deezer.searchAlbum(id);
             return album.toString();
         } catch(Exception e){
-            e.printStackTrace();
+            e.getMessage();
         }
-        return "something missing";
+        return "No album found with given Id";
     }
 
-    public long addAlbum(String id){
+    public String addAlbum(Integer id){
         try {
             DAOAlbum newAlbum = deezer.searchAlbum(id);
             albumRepository.save(newAlbum);
-            return  newAlbum.getAlbumId();
+            return  "Album "+"\"" + newAlbum.getTitle() + "\"" +
+                    " has been added to favourites with id "+ newAlbum.getAlbumId();
         }catch(Exception e){
             e.printStackTrace();
         }
 
-        return -1;
+        return "Album with given Id doesn't exist";
     }
 
     public boolean deleteAlbum(long id){

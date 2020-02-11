@@ -30,17 +30,17 @@ public class PlaylistService{
         return -1l;
     }
 
-    public boolean addToPlaylist(Long playlist_id,String id){
+    public String addToPlaylist(Long playlist_id,Integer id){
         try{
             DAOTrack newTrack = deezer.searchTrack(id);
             DAOPlaylist playlist = playlistRepository.findById(playlist_id).get();
             playlist.getPlaylistTracks().put(size++,newTrack.getTitle());
             playlistRepository.save(playlist);
-            return true;
+            return "Track "+ "\"" + newTrack.getTitle()+ "\"" + " added to playlist "+playlist_id;
         }catch(Exception e){
-            e.printStackTrace();
+            e.getMessage();
         }
-        return false;
+        return "Track/Playlist with given id not found";
     }
 
     public boolean deletePlaylist(long id){

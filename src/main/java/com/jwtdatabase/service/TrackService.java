@@ -4,6 +4,7 @@ import com.jwtdatabase.repository.TrackDao;
 import com.jwtdatabase.model.DAOTrack;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,27 +16,29 @@ public  class TrackService {
     @Autowired
     private TrackDao tracksRepository;
 
-    public String getTrack(String id){
+    public String getTrack(Integer id){
 
         try{
             DAOTrack track = deezer.searchTrack(id);
             return track.toString();
         } catch(Exception e){
-            e.printStackTrace();
+            e.getMessage();
         }
-        return "something missing";
+        return "No Track found with given Id";
     }
 
-    public long addTrack(String id){
+    public String addTrack(Integer id){
         try {
             DAOTrack newTrack = deezer.searchTrack(id);
+
             tracksRepository.save(newTrack);
-            return  newTrack.getTrackId();
-        }catch(Exception e){
-            e.printStackTrace();
+            return  "Track "+"\"" + newTrack.getTitle() + "\"" +
+                    " has been added to favourites with id "+ newTrack.getTrackId();
+        }catch(Exception e) {
+            e.getMessage();
         }
 
-        return -1;
+        return "Track with given Id doesn't exist";
     }
 
     public boolean deleteTrack(long id){

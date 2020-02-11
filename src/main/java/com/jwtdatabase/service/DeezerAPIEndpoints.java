@@ -1,26 +1,21 @@
 package com.jwtdatabase.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.*;
+
 
 import com.jwtdatabase.model.*;
 import com.jwtdatabase.repository.UserDao;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import org.hibernate.exception.DataException;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 
-import javax.websocket.EncodeException;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -55,28 +50,26 @@ public class DeezerAPIEndpoints {
 
     }
 
-    public DAOAlbum searchAlbum (String id) throws Exception {
+    public DAOAlbum searchAlbum (Integer id) throws Exception {
 
         String host = "https://api.deezer.com/album/";
         String charset = "UTF-8";
 
-
-        HttpResponse<JsonNode> response = Unirest.get(host + id)
-                .header("rapidapiHost",rapidapiHost)
-                .header("rapidKey",rapidapiKey)
-                .asJson();
-
+        HttpResponse<JsonNode> response = Unirest.get(host + id.toString())
+                    .header("rapidapiHost", rapidapiHost)
+                    .header("rapidKey", rapidapiKey)
+                    .asJson();
 
 
-        Map<Integer,String> listOfTracks = new HashMap<>();
+        Map<Integer, String> listOfTracks = new HashMap<>();
 
         JSONObject json = new JSONObject(response.getBody().toString());
         JSONArray trackList = json.getJSONObject("tracks").getJSONArray("data");
         JSONObject genre = json.getJSONObject("genres").getJSONArray("data").getJSONObject(0);
 
-        for(int i=0;i<trackList.length();i++){
+        for (int i = 0; i < trackList.length(); i++) {
             JSONObject track = trackList.getJSONObject(i);
-            listOfTracks.put(i,track.getString("title"));
+            listOfTracks.put(i, track.getString("title"));
         }
 
         DAOAlbum album = new DAOAlbum(
@@ -86,17 +79,17 @@ public class DeezerAPIEndpoints {
                 genre.getString("name")
         );
 
-        return album;
+            return album;
 
 
     }
 
-    public DAOArtist searchArtist(String id) throws Exception{
+    public DAOArtist searchArtist(Integer id) throws Exception{
 
         String host = "https://api.deezer.com/artist/";
         String charset = "UTF-8";
 
-        HttpResponse<JsonNode> response = Unirest.get(host + id)
+        HttpResponse<JsonNode> response = Unirest.get(host + id.toString())
                 .header("rapidapiHost",rapidapiHost)
                 .header("rapidKey",rapidapiKey)
                 .asJson();
@@ -113,13 +106,13 @@ public class DeezerAPIEndpoints {
         return newArtist;
     }
 
-    public DAOTrack searchTrack(String id) throws Exception{
+    public DAOTrack searchTrack(Integer id) throws Exception {
 
         String host = "https://api.deezer.com/track/";
         String charset = "UTF-8";
         ObjectMapper objectMapper = new ObjectMapper();
 
-        HttpResponse<JsonNode> response = Unirest.get(host + id)
+        HttpResponse<JsonNode> response = Unirest.get(host + id.toString())
                 .header("rapidapiHost",rapidapiHost)
                 .header("rapidKey",rapidapiKey)
                 .asJson();
@@ -127,13 +120,14 @@ public class DeezerAPIEndpoints {
         JSONObject json = new JSONObject(response.getBody().toString());
 
         DAOTrack track = new DAOTrack(json.getString("title"),
-                json.getJSONObject("artist").getString("name"),
-                json.getJSONObject("album").getString("title"),
-                json.getInt("duration")
+                    json.getJSONObject("artist").getString("name"),
+                    json.getJSONObject("album").getString("title"),
+                    json.getInt("duration"));
 
-        );
+
 
         return track;
+
     }
 
 }

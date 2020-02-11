@@ -5,14 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class HelloWorldController {
+public class SearchController {
 
     private final DeezerAPIEndpoints dc = new DeezerAPIEndpoints();
 
-    @RequestMapping({ "/hello"})
-    public String firstPage() {
-            return "Hello World";
-    }
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping(value = "/search")
@@ -23,7 +19,7 @@ public class HelloWorldController {
         } catch(Exception e){
             e.printStackTrace();
         }
-        return "Something missing";
+        return "No Results";
     }
 
 

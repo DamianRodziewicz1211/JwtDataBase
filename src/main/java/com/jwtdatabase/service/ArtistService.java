@@ -14,25 +14,26 @@ public class ArtistService {
     @Autowired
     private ArtistDao artistRepository;
 
-    public String getArtist(String id){
+    public String getArtist(Integer id){
         try{
             DAOArtist newArtist = deezer.searchArtist(id);
             return newArtist.toString();
         }catch(Exception e){
             e.printStackTrace();
         }
-        return "Something missing";
+        return "No artist found with given Id";
     }
 
-    public Long addArtist(String id){
+    public String addArtist(Integer id){
         try{
             DAOArtist newArtist = deezer.searchArtist(id);
             artistRepository.save(newArtist);
-            return newArtist.getArtistId();
+            return "Artist "+"\"" + newArtist.getArtistName() + "\"" +
+                    " has been added to favourites with id "+ newArtist.getArtistId();
         }catch(Exception e){
             e.printStackTrace();
         }
-        return -1l;
+        return "Artist with given Id doesn't exist";
     }
 
     public boolean deleteArtist(long id){

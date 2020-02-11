@@ -1,9 +1,13 @@
 package com.jwtdatabase.controller;
 
 
+import com.jwtdatabase.model.ResponseId;
 import com.jwtdatabase.service.TrackService;
+import org.apache.http.MethodNotSupportedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,15 +26,15 @@ public class TrackController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping(value = "/track/{id}")
-    public String searchTrack(@PathVariable String id){
+    public String searchTrack(@PathVariable (value = "id") Integer id){
 
         return trackService.getTrack(id);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
-    @PostMapping(value = "/track/{id}")
-    public long addTrack(@PathVariable String id){
-        return trackService.addTrack(id);
+    @PostMapping(value = "/track")
+    public String addTrack(@RequestBody ResponseId id ){
+        return trackService.addTrack(id.getId());
     }
 
     @ResponseStatus(value = HttpStatus.OK)

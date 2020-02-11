@@ -1,5 +1,6 @@
 package com.jwtdatabase.controller;
 
+import com.jwtdatabase.model.ResponseId;
 import com.jwtdatabase.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,15 +19,15 @@ public class AlbumController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping(value = "/album/{id}")
-    public String searchAlbum(@PathVariable String id){
+    public String searchAlbum(@PathVariable Integer id){
 
         return albumService.getAlbum(id);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
-    @PostMapping(value = "/album/{id}")
-    public long addAlbum(@PathVariable String id){
-        return albumService.addAlbum(id);
+    @PostMapping(value = "/album")
+    public String addAlbum(@RequestBody ResponseId id){
+        return albumService.addAlbum(id.getId());
     }
 
     @ResponseStatus(value = HttpStatus.OK)
