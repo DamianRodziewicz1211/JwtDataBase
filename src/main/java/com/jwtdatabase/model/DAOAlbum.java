@@ -1,3 +1,4 @@
+
 package com.jwtdatabase.model;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ public class DAOAlbum {
     @MapKeyColumn(name = "track_nr")
     @Column(name = "title")
     @CollectionTable(name = "Track_list")
-    private Map<Integer,String> tracks = new HashMap<Integer,String>();
+    private Map<String,String> tracks = new HashMap<String,String>();
 
     @Column
     private String genre;
@@ -29,7 +30,7 @@ public class DAOAlbum {
     public DAOAlbum() {
     }
 
-    public DAOAlbum(String title, String artist, Map<Integer, String> tracks, String genre) {
+    public DAOAlbum(String title, String artist, Map<String, String> tracks, String genre) {
         this.title = title;
         this.artist = artist;
         this.tracks = tracks;
@@ -56,11 +57,11 @@ public class DAOAlbum {
         this.artist = artist;
     }
 
-    public Map<Integer, String> getTracks() {
+    public Map<String, String> getTracks() {
         return tracks;
     }
 
-    public void setTracks(Map<Integer, String> tracks) {
+    public void setTracks(Map<String, String> tracks) {
         this.tracks = tracks;
     }
 

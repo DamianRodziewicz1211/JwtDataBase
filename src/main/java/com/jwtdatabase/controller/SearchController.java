@@ -2,6 +2,7 @@ package com.jwtdatabase.controller;
 
 import com.jwtdatabase.service.DeezerAPIEndpoints;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,7 +12,7 @@ public class SearchController {
 
 
     @ResponseStatus(value = HttpStatus.OK)
-    @GetMapping(value = "/search")
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public String search(@RequestParam String q){
 
         try {

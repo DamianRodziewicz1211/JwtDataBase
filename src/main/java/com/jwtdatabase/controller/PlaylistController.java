@@ -4,13 +4,29 @@ import com.jwtdatabase.model.DAOPlaylist;
 import com.jwtdatabase.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class PlaylistController {
 
     @Autowired
     private PlaylistService playlistService;
+
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    @GetMapping(value = "/playlist", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<DAOPlaylist> printPlaylists() {
+        return playlistService.printPlaylists();
+    }
+
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    @GetMapping(value = "/playlist/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getPlaylist(@PathVariable long id){
+        return playlistService.getPlaylist(id);
+    }
+
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "/playlist")
