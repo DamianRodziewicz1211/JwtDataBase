@@ -1,12 +1,18 @@
 package com.jwtdatabase.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.jwtdatabase.json.PlaylistSerializer;
 import com.jwtdatabase.model.DAOPlaylist;
 import com.jwtdatabase.model.DAOTrack;
 import com.jwtdatabase.repository.PlaylistDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class PlaylistService{
@@ -17,6 +23,24 @@ public class PlaylistService{
 
     @Autowired
     private PlaylistDao playlistRepository;
+
+    public String getPlaylist(long id){
+        try{
+            DAOPlaylist playlist = playlistRepository.findById(id).get();
+
+            ObjectMapper mapper = new ObjectMapper();
+            SimpleModule module = new SimpleModule();
+            module.addSerializer(DAOPlaylist.class, new PlaylistSerializer());
+            mapper.registerModule(module);
+
+            String serializedPlaylist = mapper.writeValueAsString(playlist);
+
+            return serializedPlaylist;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "No playlist exists with given id: "+ id;
+    }
 
     public long createPlaylist(String name,String description){
         try{
@@ -50,5 +74,16 @@ public class PlaylistService{
         else
             return false;
     }
+
+    public List<DAOPlaylist> printPlaylists() {
+
+        List<DAOPlaylist> playlists = new ArrayList<>();
+        Iterable<DAOPlaylist> repositoryPlaylists = playlistRepository.findAll();
+
+        repositoryPlaylists.forEach(playlists::add);
+
+        return playlists;
+    }
+
 
 }

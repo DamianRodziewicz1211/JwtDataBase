@@ -61,15 +61,16 @@ public class DeezerAPIEndpoints {
                     .asJson();
 
 
-        Map<Integer, String> listOfTracks = new HashMap<>();
+        Map<String, String> listOfTracks = new HashMap<>();
 
         JSONObject json = new JSONObject(response.getBody().toString());
         JSONArray trackList = json.getJSONObject("tracks").getJSONArray("data");
         JSONObject genre = json.getJSONObject("genres").getJSONArray("data").getJSONObject(0);
 
-        for (int i = 0; i < trackList.length(); i++) {
+
+        for (Integer i = 0; i < trackList.length(); i++) {
             JSONObject track = trackList.getJSONObject(i);
-            listOfTracks.put(i, track.getString("title"));
+            listOfTracks.put(i.toString(), track.getString("title"));
         }
 
         DAOAlbum album = new DAOAlbum(
