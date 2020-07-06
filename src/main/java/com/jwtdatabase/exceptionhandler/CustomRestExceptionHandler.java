@@ -30,6 +30,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -113,6 +114,18 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<Object>(apiErrors,new HttpHeaders(),apiErrors.getStatus());
     }
+
+    @ExceptionHandler(java.util.NoSuchElementException.class)
+    protected ResponseEntity<Object> handleNoSuchElementException(
+            NoSuchElementException ex) {
+        String error = "No element exist with given id";
+        ApiErrors apiErrors = new ApiErrors(HttpStatus.NOT_FOUND,ex.getMessage(),error);
+
+        return new ResponseEntity<Object>(apiErrors, new HttpHeaders(), apiErrors.getStatus());
+
+    }
+
+
 
 
 }

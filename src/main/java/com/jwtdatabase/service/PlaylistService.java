@@ -1,5 +1,6 @@
 package com.jwtdatabase.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.jwtdatabase.json.PlaylistSerializer;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -26,17 +28,24 @@ public class PlaylistService{
 
     public String getPlaylist(long id){
         try{
-            DAOPlaylist playlist = playlistRepository.findById(id).get();
+            Optional<DAOPlaylist> optPlaylist = playlistRepository.findById(id);
 
-            ObjectMapper mapper = new ObjectMapper();
-            SimpleModule module = new SimpleModule();
-            module.addSerializer(DAOPlaylist.class, new PlaylistSerializer());
-            mapper.registerModule(module);
+            if(optPlaylist.isPresent()) {
+                DAOPlaylist playlist = optPlaylist.get();
+                ObjectMapper mapper = new ObjectMapper();
+                SimpleModule module = new SimpleModule();
+                module.addSerializer(DAOPlaylist.class, new PlaylistSerializer());
+                mapper.registerModule(module);
 
-            String serializedPlaylist = mapper.writeValueAsString(playlist);
+                String serializedPlaylist = mapper.writeValueAsString(playlist);
 
-            return serializedPlaylist;
-        }catch(Exception e){
+                return serializedPlaylist;
+            } else{
+                return "No playlist with given id "+ id;
+            }
+        }catch(java.util.NoSuchElementException e){
+            e.printStackTrace();
+        }catch(Exception e) {
             e.printStackTrace();
         }
         return "No playlist exists with given id: "+ id;

@@ -20,13 +20,17 @@ public class AlbumSerializer extends StdSerializer<DAOAlbum>  {
     @Override
     public void serialize(DAOAlbum album, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStartObject();
+        gen.writeNumberField("albumId", album.getAlbumId());
         gen.writeStringField("title", album.getTitle());
         gen.writeStringField("genre", album.getGenre());
         gen.writeStringField("artist", album.getArtist());
+        gen.writeStringField("cover", album.getCover());
+        gen.writeNumberField("deezerId", album.getDeezerId());
         gen.writeObjectFieldStart("tracks");
         for (String key : album.getTracks().keySet()) {
             gen.writeStringField( key, album.getTracks().get(key));
         }
+
         gen.writeEndObject();
 
     }

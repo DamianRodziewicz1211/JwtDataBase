@@ -18,6 +18,7 @@ public class DAOArtist {
     private String type;
 
 
+
     public DAOArtist() {
     }
 

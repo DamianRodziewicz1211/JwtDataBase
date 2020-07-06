@@ -34,6 +34,7 @@ public class AlbumController {
         return albumService.addAlbum(id.getId());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @ResponseStatus(value = HttpStatus.GONE)
     @DeleteMapping(value = "/album/{id}")
     public boolean removeAlbum(@PathVariable long id){

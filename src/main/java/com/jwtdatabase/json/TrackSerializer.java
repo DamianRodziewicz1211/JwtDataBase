@@ -22,10 +22,14 @@ public class TrackSerializer extends StdSerializer<DAOTrack> {
     public void serialize(
             DAOTrack track, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStartObject();
+        gen.writeNumberField("trackId", track.getTrackId());
         gen.writeStringField("title", track.getTitle());
         gen.writeStringField("album", track.getAlbum());
         gen.writeStringField("artist", track.getArtist());
         gen.writeNumberField("duration", track.getDuration());
+        gen.writeStringField("preview", track.getPreview());
+        gen.writeStringField("cover", track.getCover());
+        gen.writeNumberField("deezerId", track.getDeezerId());
         gen.writeEndObject();
     }
 

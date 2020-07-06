@@ -39,11 +39,13 @@ public class TrackController {
     }
 
     @ResponseStatus(value = HttpStatus.CREATED)
-    @PostMapping(value = "/track")
+    @PostMapping(value = "/track",
+                produces = MediaType.APPLICATION_JSON_VALUE)
     public String addTrack(@RequestBody ResponseId id ){
         return trackService.addTrack(id.getId());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @ResponseStatus(value = HttpStatus.GONE)
     @DeleteMapping(value = "/track/{id}")
     public boolean removeTrack(@PathVariable long id){

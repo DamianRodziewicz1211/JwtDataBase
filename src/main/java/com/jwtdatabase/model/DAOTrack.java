@@ -19,13 +19,22 @@ public class DAOTrack {
     private String album;
     @Column
     private Integer duration;
+    @Column
+    private String preview;
+    @Column
+    private String cover;
+    @Column
+    private Integer deezerId;
 
-    public DAOTrack(String title, String artist, String album, Integer duration) {
+
+    public DAOTrack(String title, String artist, String album, Integer duration, String preview,String cover,Integer deezerId) {
         this.title = title;
         this.artist = artist;
         this.album = album;
         this.duration = duration;
-
+        this.preview = preview;
+        this.cover = cover;
+        this.deezerId = deezerId;
     }
 
     public DAOTrack() {
@@ -68,13 +77,42 @@ public class DAOTrack {
         return trackId;
     }
 
+    public String getPreview() {
+        return preview;
+    }
+
+    public void setPreview(String preview) {
+        this.preview = preview;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public Integer getDeezerId() {
+        return deezerId;
+    }
+
+    public void setDeezerId(Integer deezerId) {
+        this.deezerId = deezerId;
+    }
+
+
     @Override
     public String toString() {
-        return '{' +
-                " title='" + title + '\'' +
+        return "DAOTrack{" +
+                "trackId=" + trackId +
+                ", title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
                 ", album='" + album + '\'' +
                 ", duration=" + duration +
+                ", preview='" + preview + '\'' +
+                ", cover='" + cover + '\'' +
+                ", deezerId=" + deezerId +
                 '}';
     }
 }

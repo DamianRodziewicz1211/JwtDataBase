@@ -27,14 +27,22 @@ public class DAOAlbum {
     @Column
     private String genre;
 
+    @Column
+    private String cover;
+
+    @Column
+    private Integer deezerId;
+
     public DAOAlbum() {
     }
 
-    public DAOAlbum(String title, String artist, Map<String, String> tracks, String genre) {
+    public DAOAlbum(String title, String artist, Map<String, String> tracks, String genre, String cover, Integer deezerId) {
         this.title = title;
         this.artist = artist;
         this.tracks = tracks;
         this.genre = genre;
+        this.cover = cover;
+        this.deezerId = deezerId;
     }
 
     public long getAlbumId() {
@@ -73,13 +81,32 @@ public class DAOAlbum {
         this.genre = genre;
     }
 
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public Integer getDeezerId() {
+        return deezerId;
+    }
+
+    public void setDeezerId(Integer deezerId) {
+        this.deezerId = deezerId;
+    }
+
     @Override
     public String toString() {
-        return '{' +
-                "title='" + title + '\'' +
+        return "DAOAlbum{" +
+                "albumId=" + albumId +
+                ", title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
                 ", tracks=" + tracks +
                 ", genre='" + genre + '\'' +
+                ", cover='" + cover + '\'' +
+                ", deezerId=" + deezerId +
                 '}';
     }
 }
